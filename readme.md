@@ -1,20 +1,11 @@
 # Giftano API Test
 
-## About Project
-MamiKos is an app where user can search kost for room that have been added by owner.
-
-Also, user can ask about room availability using credit system.
-
-Regular user will have 20 credit and premium user will have 40 credit per month.
-
 ## Project Requirement
-1. Owner is allowed to add more than 1 kost
-2. Owner is allowed to update and delete his/her kost
-3. User can see kost list that have been added
-4. User search kost by name, city, or price
-5. User can sort the list by price
-6. User can see kost detail
-7. User ask about room availability using their credit (5 credit per action)
+Create a REST API with CRUD with required features:
+1. list items
+2. add item
+3. update item
+4. delete item
 
 # Setup Project On Your Local Machine
 
@@ -29,7 +20,7 @@ Regular user will have 20 credit and premium user will have 40 credit per month.
 1. Make sure you install all the Prerequisite
 2. Clone the project from github to your directory
 
-`git@github.com:tyanosaurusrex/mamikos-api-test.git`
+`git@github.com:tyanosaurusrex/giftano-api-test.git`
 
 3. Install the dependencies using this command
 
@@ -40,6 +31,7 @@ Regular user will have 20 credit and premium user will have 40 credit per month.
 5. Setup the database by create new database on you local machine, and run these commands
 
 `php artisan migrate`
+`php artisan db:seed`
 
 6. Run the project using this command
 
@@ -47,117 +39,68 @@ Regular user will have 20 credit and premium user will have 40 credit per month.
 
 and the project will be running on `http://localhost:8000`
 
-7. If there's a problem with Personal Access Client, run
+7. Run testing using this command
 
-`php artisan passport:install`
+`vendor/bin/phpunit`
 
 # API List
 
-## Auth /api/
+## Categories /api/categories/
 
-**Register User**
+**Show all categories**
+> GET /api/categories
 
-> POST /api/register
-
-Body:
-```
-{
-	"name": "owner1",
-	"email": "owner1@mail.com",
-	"password": "owner1",
-	"confirm_password": "owner1",
-	"role": "1"
-}
-```
-**Login User**
-
-> POST /api/login
+**Create New category**
+> POST /api/categories
 
 Body:
 ```
 {
-	"email": "user0@mail.com",
-	"password": "user0"
+	"name": "Category B",
+	"parent": 0, 
 }
 ```
-**Logout User**
 
-> POST /api/logout
-
-Authorization: Bearer Token
-
-
-## User /api/users/
-
-**User Detail**
-> POST /api/users/details
-
-Authorization: Bearer Token
-
-**Upgrade User Status**
-> PUT /api/users/upgrade_status
-
-Authorization: Bearer Token
-
-## Kost /api/kosts/
-
-**Show Kosts List with Query Search**
-> GET /api/kosts?city={city}&sort={sort}&by={sortby}
-
-**Show Kost Detail**
-> GET /api/kosts/{id}
-
-**Create New Kost**
-> POST /api/kosts
-
-Authorization: Bearer Token
+**Update Category**
+> PUT /api/categories/{id}
 
 Body:
 ```
 {
-	"name": "Kost B",
-	"city": "yogya",
-	"room_length": 3,
-	"room_width": 3,
-	"available_rooms": 2,
-	"price": 700000
+	"name": "Category B",
+	"parent": 0,
 }
 ```
 
-**Update Kost Detail**
-> PUT /api/kosts/{id}
+**Delete Category**
+> DELETE /api/categories/{id}
 
-Authorization: Bearer Token
+## Item /api/items/
+
+**Show all items**
+> GET /api/items
+
+**Create New item**
+> POST /api/items
 
 Body:
 ```
 {
-	"name": "Kost B",
-	"city": "yogya",
-	"room_length": 3,
-	"room_width": 3,
-	"available_rooms": 2,
-	"price": 700000
+	"name": "Item B",
+	"category_id": 4, 
 }
 ```
 
-**Delete Kost**
-> DELETE /api/kosts/{id}
+**Update Item**
+> PUT /api/items/{id}
 
-Authorization: Bearer Token
-
-## User Activity /api/activities
-
-**Ask Question**
-> POST /api/activities/ask
-
-Authorization: Bearer Token
-
-Body: 
+Body:
 ```
 {
-	"recipient_id": 3,
-	"activity": "Ask",
-	"credit_usage": 5
+	"name": "Item B",
+	"category_id": 4, 
 }
 ```
+
+**Delete Item**
+> DELETE /api/items/{id}
