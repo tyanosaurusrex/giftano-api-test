@@ -128,9 +128,9 @@ class CategoryController extends Controller
         
         Category::destroy($id);
         return response()->json([
-            'code' => $this->successStatus,
+            'code' => 204,
             'status' => true,
             'message' => 'Success'
-        ], $this->successStatus);
+        ], 204);
     }
 }
